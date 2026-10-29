@@ -1,0 +1,15 @@
+version: '3'
+
+tasks:
+  proto:
+    desc: Проверить proto и сгенерировать Go-код
+    cmds:
+      - buf build
+      - buf lint
+      - buf generate
+      - go mod tidy
+
+  proto:deps:
+    desc: Обновить зависимости Buf
+    cmds:
+      - buf dep update

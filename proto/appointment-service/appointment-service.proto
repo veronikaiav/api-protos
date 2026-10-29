@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+package appointment.v1;
+import "google/protobuf/timestamp.proto";
+import "google/type/date.proto";
+
+option go_package = "github.com/veronikaiav/api-protos/gen/go/appointment-service;appointmentv1";
+
+service AppointmentService {
+  rpc GetAvailableSlots(GetAvailableSlotsRequest) returns (GetAvailableSlotsResponse) {}
+  rpc CreateAppointment(CreateAppointmentRequest) returns (CreateAppointmentResponse) {}
+  rpc CancelAppointment(CancelAppointmentRequest) returns (CancelAppointmentResponse) {}
+}
+
+enum AppointmentStatus {
+  APPOINTMENT_STATUS_UNSPECIFIED = 0;
+  APPOINTMENT_STATUS_CONFIRMED   = 1;
+  APPOINTMENT_STATUS_CANCELLED   = 2;
+}
+
+message Appointment {
+  string                    appointment_id = 1;
+  string                    doctor_id      = 2;
+  string                    patient_id     = 3;
+  google.protobuf.Timestamp start_time     = 4;
+  google.protobuf.Timestamp end_time       = 5;
+  AppointmentStatus         status         = 6;
+}
+
+message GetAvailableSlotsRequest {
+  string           doctor_id = 1;
+  google.type.Date date      = 2;
+}
+
+message GetAvailableSlotsResponse {
+  string                             doctor_id   = 1;
+  google.type.Date                   date        = 2;
+  repeated google.protobuf.Timestamp start_times = 3;
+}
+
+message CreateAppointmentRequest {
+  string                    doctor_id  = 1;
+  string                    patient_id = 2;
+  google.protobuf.Timestamp start_time = 3;
+}
+
+message CreateAppointmentResponse {
+  Appointment appointment = 1;
+}
+
+message CancelAppointmentRequest {
+  string appointment_id = 1;
+}
+
+message CancelAppointmentResponse {
+  Appointment appointment = 1;
+}
