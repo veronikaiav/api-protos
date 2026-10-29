@@ -1,10 +1,10 @@
 version: '3'
+clean: true
 
 tasks:
   proto:
     desc: Проверить proto и сгенерировать Go-код
     cmds:
-      - buf build
       - buf lint
       - buf generate
       - go mod tidy

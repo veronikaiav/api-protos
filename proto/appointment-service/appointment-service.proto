@@ -1,3 +1,4 @@
+// TODO: add validate
 syntax = "proto3";
 
 package appointment.v1;
